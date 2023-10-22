@@ -1,90 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import ClassCheckBox from "./components/ClassCheckbox";
+import classes from "./constants";
 import "./App.css";
 
-const classes = [
-	{
-		id: "class-9",
-		name: "Class 9",
-		checked: false,
-		sections: [
-			{
-				id: "sec-a",
-				name: "Section A",
-				checked: false,
-				students: [
-					{
-						id: "s-1",
-						name: "Student 1",
-						checked: false,
-					},
-					{
-						id: "s-2",
-						name: "Student 2",
-						checked: false,
-					},
-					{
-						id: "s-3",
-						name: "Student 3",
-						checked: false,
-					},
-				],
-			},
-			{
-				id: "sec-b",
-				name: "Section B",
-				checked: false,
-				students: [
-					{
-						id: "s-4",
-						name: "Student 4",
-						checked: false,
-					},
-					{
-						id: "s-5",
-						name: "Student 5",
-						checked: false,
-					},
-					{
-						id: "s-6",
-						name: "Student 6",
-						checked: false,
-					},
-				],
-			},
-			{
-				id: "sec-c",
-				name: "Section C",
-				checked: false,
-				students: [
-					{
-						id: "s-7",
-						name: "Student 7",
-						checked: false,
-					},
-					{
-						id: "s-8",
-						name: "Student 8",
-						checked: false,
-					},
-					{
-						id: "s-9",
-						name: "Student 9",
-						checked: false,
-					},
-				],
-			},
-		],
-	},
-];
 
 export default function App() {
 	const [data, setData] = useState(classes);
 
-	const handleClassCheck = (classId) => {
+	const handleClassCheck = (classIndex) => {
 		let dataClone = [...data];
-		let targetClass = dataClone.find((cls) => cls.id === classId);
-		let classIndex = dataClone.findIndex((cls) => cls.id === classId);
+		let targetClass = dataClone[classIndex];
 
 		targetClass.checked = !targetClass.checked;
 		targetClass.sections = targetClass.sections.map((section) => {
@@ -104,11 +29,10 @@ export default function App() {
 		setData([...dataClone]);
 	};
 
-	const handleSectionCheck = (sectionId, classId) => {
+	const handleSectionCheck = (sectionIndex, classIndex) => {
 		let dataClone = [...data];
-		let classIndex = dataClone.findIndex((cls) => cls.id === classId);
-		let sections = dataClone[classIndex].sections.map((section) => {
-			if (section.id === sectionId) {
+		let sections = dataClone[classIndex].sections.map((section, index) => {
+			if (index === sectionIndex) {
 				section.checked = !section.checked;
 				let students = section.students.map((student) => ({
 					...student,
@@ -129,22 +53,20 @@ export default function App() {
 		setData([...dataClone]);
 	};
 
-	const handleStudentCheck = (studentId, sectionId, classId) => {
+	const handleStudentCheck = (studentIndex, sectionIndex, classIndex) => {
 		let dataClone = [...data];
-		let classIndex = dataClone.findIndex((cls) => cls.id === classId);
 		let sections = dataClone[classIndex].sections;
-		let sectionIndex = sections.findIndex((sec) => sec.id === sectionId);
-		let students = sections[sectionIndex].students.map((std) => {
-			if (std.id === studentId) {
+		let students = sections[sectionIndex].students.map((student, index) => {
+			if (index === studentIndex) {
 				return {
-					...std,
-					checked: !std.checked,
+					...student,
+					checked: !student.checked,
 				};
 			}
-			return std;
+			return student;
 		});
 
-		let allStudentsChecked = students.every((std) => std.checked === true);
+		let allStudentsChecked = students.every((student) => student.checked === true);
 
 		sections[sectionIndex].students = students;
 		sections[sectionIndex].checked = allStudentsChecked;
@@ -168,18 +90,18 @@ export default function App() {
 	return (
 		<div className="App">
 			<h1>Checkbox React App</h1>
-			{data.map((cls) => (
+			{data.map((classObj, classIndex) => (
 				<ClassCheckBox
-					key={cls.id}
-					clsName={cls.name}
-					sections={cls.sections}
-					classChecked={cls.checked}
-					handleClassCheck={() => handleClassCheck(cls.id)}
-					handleSectionCheck={(sectionId) =>
-						handleSectionCheck(sectionId, cls.id)
+					key={classObj.id}
+					classObjName={classObj.name}
+					sections={classObj.sections}
+					classChecked={classObj.checked}
+					handleClassCheck={() => handleClassCheck(classIndex)}
+					handleSectionCheck={(sectionIndex) =>
+						handleSectionCheck(sectionIndex, classIndex)
 					}
-					handleStudentCheck={(studentId, sectionId) =>
-						handleStudentCheck(studentId, sectionId, cls.id)
+					handleStudentCheck={(studentIndex, sectionIndex) =>
+						handleStudentCheck(studentIndex, sectionIndex, classIndex)
 					}
 				/>
 			))}

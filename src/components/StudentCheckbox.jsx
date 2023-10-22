@@ -1,13 +1,11 @@
 import React from "react";
 
 const StudentCheck = ({ 
-	studentId,
+	studentIndex,
 	studentName,
 	studentChecked,
 	handleStudentCheck 
 }) => {
-
-	console.log("student rendered");
 
 	return (
 		<div className="student-tab">
@@ -15,7 +13,7 @@ const StudentCheck = ({
 				type="checkbox"
 				name="student"
 				checked={studentChecked}
-				onChange={() => handleStudentCheck(studentId)}
+				onChange={() => handleStudentCheck(studentIndex)}
 			/>
 			<label>{studentName}</label>
 		</div>

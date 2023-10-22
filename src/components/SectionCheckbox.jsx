@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import StudentCheckbox from "./StudentCheckbox";
 
 const SectionCheck = ({
-	sectionId,
+	sectionIndex,
 	sectionName,
 	students,
 	sectionChecked,
@@ -10,12 +10,12 @@ const SectionCheck = ({
 	handleStudentCheck,
 }) => {
 
-	const handleCheck = useCallback((studentId) => {
-		handleStudentCheck(studentId, sectionId);
+	const handleCheck = useCallback((studentIndex) => {
+		handleStudentCheck(studentIndex, sectionIndex);
 	}, []);
 
-	const handleSecCheck = useCallback((sectionId) => {
-		handleSectionCheck(sectionId);
+	const handleSecCheck = useCallback((sectionIndex) => {
+		handleSectionCheck(sectionIndex);
 	}, []);
 
 	return (
@@ -25,15 +25,15 @@ const SectionCheck = ({
 					type="checkbox"
 					name="section"
 					checked={sectionChecked}
-					onChange={() => handleSecCheck(sectionId)}
+					onChange={() => handleSecCheck(sectionIndex)}
 				/>
 				<label>{sectionName}</label>
 			</div>
 			<div className="student-container">
-				{students.map((student) => (
+				{students.map((student, index) => (
 					<StudentCheckbox
 						key={student.id}
-						studentId={student.id}
+						studentIndex={index}
 						studentName={student.name}
 						studentChecked={student.checked}
 						handleStudentCheck={handleCheck}
