@@ -1,8 +1,8 @@
 .App {
 	font-family: sans-serif;
 	text-align: left;
-   max-width: 500px;
-   margin: 0 auto;
+	max-width: 500px;
+	margin: 0 auto;
 }
 
 .class-tab {
@@ -14,8 +14,7 @@
 }
 
 .section-container {
-	margin-left: 40px;
-	margin-top: 10px;
+	margin: 10px 0 0 40px;
 }
 
 .section-tab,
@@ -36,5 +35,5 @@
 
 input[type="checkbox"] {
 	cursor: pointer;
-   margin-right: 10px;
+	margin-right: 10px;
 }

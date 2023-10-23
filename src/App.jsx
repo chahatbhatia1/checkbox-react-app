@@ -5,36 +5,35 @@ import "./App.css";
 
 
 export default function App() {
-	const [data, setData] = useState(classes);
+	const [classList, setClassList] = useState(classes);
 
 	const handleClassCheck = (classIndex) => {
-		let dataClone = [...data];
-		let targetClass = dataClone[classIndex];
+		let classListClone = [...classList];
 
-		targetClass.checked = !targetClass.checked;
-		targetClass.sections = targetClass.sections.map((section) => {
-			let students = section.students.map((student) => ({
+		classListClone[classIndex].checked = !classListClone[classIndex].checked;
+		classListClone[classIndex].sections = classListClone[classIndex]?.sections?.map((section) => {
+			let students = section?.students?.map((student) => ({
 				...student,
-				checked: targetClass.checked,
+				checked: classListClone[classIndex].checked,
 			}));
 
 			return {
 				...section,
-				checked: targetClass.checked,
+				checked: classListClone[classIndex].checked,
 				students,
 			};
 		});
 
-		dataClone[classIndex] = targetClass;
-		setData([...dataClone]);
+		classListClone[classIndex] = classListClone[classIndex];
+		setClassList([...classListClone]);
 	};
 
 	const handleSectionCheck = (sectionIndex, classIndex) => {
-		let dataClone = [...data];
-		let sections = dataClone[classIndex].sections.map((section, index) => {
+		let classListClone = [...classList];
+		let sections = classListClone[classIndex]?.sections?.map((section, index) => {
 			if (index === sectionIndex) {
 				section.checked = !section.checked;
-				let students = section.students.map((student) => ({
+				let students = section?.students?.map((student) => ({
 					...student,
 					checked: section.checked,
 				}));
@@ -47,16 +46,16 @@ export default function App() {
 			return section;
 		});
 
-		dataClone = handleAllSectionsCheck(dataClone, classIndex);
-		dataClone[classIndex].sections = sections;
+		classListClone = handleAllSectionsCheck(classListClone, classIndex);
+		classListClone[classIndex].sections = sections;
 
-		setData([...dataClone]);
+		setClassList([...classListClone]);
 	};
 
 	const handleStudentCheck = (studentIndex, sectionIndex, classIndex) => {
-		let dataClone = [...data];
-		let sections = dataClone[classIndex].sections;
-		let students = sections[sectionIndex].students.map((student, index) => {
+		let classListClone = [...classList];
+		let sections = classListClone[classIndex]?.sections;
+		let students = sections[sectionIndex]?.students?.map((student, index) => {
 			if (index === studentIndex) {
 				return {
 					...student,
@@ -66,36 +65,36 @@ export default function App() {
 			return student;
 		});
 
-		let allStudentsChecked = students.every((student) => student.checked === true);
+		const allStudentsChecked = students.every((student) => student.checked === true);
 
 		sections[sectionIndex].students = students;
 		sections[sectionIndex].checked = allStudentsChecked;
 
-		dataClone[classIndex].sections = sections;
+		classListClone[classIndex].sections = sections;
 
-		dataClone = handleAllSectionsCheck(dataClone, classIndex);
+		classListClone = handleAllSectionsCheck(classListClone, classIndex);
 
-		setData([...dataClone]);
+		setClassList([...classListClone]);
 	};
 
-	const handleAllSectionsCheck = (dataClone, classIndex) => {
-		let allSectionChecked = dataClone[classIndex].sections.every(
+	const handleAllSectionsCheck = (classListClone, classIndex) => {
+		let allSectionChecked = classListClone[classIndex]?.sections.every(
 			(section) => section.checked === true
 		);
-		dataClone[classIndex].checked = allSectionChecked;
+		classListClone[classIndex].checked = allSectionChecked;
 
-		return dataClone;
+		return classListClone;
 	};
 
 	return (
 		<div className="App">
 			<h1>Checkbox React App</h1>
-			{data.map((classObj, classIndex) => (
+			{classList?.map((classObj, classIndex) => (
 				<ClassCheckBox
 					key={classObj.id}
 					classObjName={classObj.name}
 					sections={classObj.sections}
-					classChecked={classObj.checked}
+					isClassChecked={classObj.checked}
 					handleClassCheck={() => handleClassCheck(classIndex)}
 					handleSectionCheck={(sectionIndex) =>
 						handleSectionCheck(sectionIndex, classIndex)

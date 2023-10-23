@@ -5,7 +5,7 @@ const SectionCheck = ({
 	sectionIndex,
 	sectionName,
 	students,
-	sectionChecked,
+	isSectionChecked,
 	handleSectionCheck,
 	handleStudentCheck,
 }) => {
@@ -24,18 +24,18 @@ const SectionCheck = ({
 				<input
 					type="checkbox"
 					name="section"
-					checked={sectionChecked}
+					checked={isSectionChecked}
 					onChange={() => handleSecCheck(sectionIndex)}
 				/>
 				<label>{sectionName}</label>
 			</div>
 			<div className="student-container">
-				{students.map((student, index) => (
+				{students?.map((student, index) => (
 					<StudentCheckbox
 						key={student.id}
 						studentIndex={index}
 						studentName={student.name}
-						studentChecked={student.checked}
+						isStudentChecked={student.checked}
 						handleStudentCheck={handleCheck}
 					/>
 				))}

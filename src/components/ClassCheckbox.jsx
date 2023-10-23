@@ -4,7 +4,7 @@ import SectionCheckbox from "./SectionCheckbox";
 const ClassCheckBox = ({
 	classObjName,
 	sections,
-	classChecked,
+	isClassChecked,
 	handleClassCheck,
 	handleSectionCheck,
 	handleStudentCheck,
@@ -24,19 +24,19 @@ const ClassCheckBox = ({
 				<input
 					type="checkbox"
 					name="class"
-					checked={classChecked}
+					checked={isClassChecked}
 					onChange={handleClassCheck}
 				/>
 				<label>{classObjName}</label>
 			</div>
 			<div className="section-container">
-				{sections.map((section, index) => (
+				{sections?.map((section, index) => (
 					<SectionCheckbox
 						key={section.id}
 						sectionIndex={index}
 						sectionName={section.name}
 						students={section.students}
-						sectionChecked={section.checked}
+						isSectionChecked={section.checked}
 						handleSectionCheck={handleSecCheck}
 						handleStudentCheck={handleStdCheck}
 					/>

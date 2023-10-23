@@ -3,7 +3,7 @@ import React from "react";
 const StudentCheck = ({ 
 	studentIndex,
 	studentName,
-	studentChecked,
+	isStudentChecked,
 	handleStudentCheck 
 }) => {
 
@@ -12,7 +12,7 @@ const StudentCheck = ({
 			<input
 				type="checkbox"
 				name="student"
-				checked={studentChecked}
+				checked={isStudentChecked}
 				onChange={() => handleStudentCheck(studentIndex)}
 			/>
 			<label>{studentName}</label>
